@@ -23,7 +23,7 @@ $(function(){
         $gifSearch.val("");
             //use axios & await to GET the website, pass along the {params: q: searchItem, api_key: v4ZBxUtNIYcl6TsrL6tuk70cSWClyx3F}
         const result = await axios.get('https://api.giphy.com/v1/gifs/search', {params: { q : searchItem, api_key: token} });
-        // console.log(result.data);
+        console.log(result.data);
             //add to the $gifBody as an image---create an outside formula
         // addGif(result);
         addGif(result.data);
@@ -35,41 +35,41 @@ $(function(){
         //to get different results: Math.random() will be needed
 //Step 3: append result.data as an image to the $gifBody//create a function
 function addGif(searchResult){
-    console.log(searchResult.data[0]);
+    // console.log(searchResult.data[0]);
     let numGifs = searchResult.data.length;
     console.log(numGifs);
 
         //to get different results, plug in Math.floor(Math.random * numGifs {creates constant change and no set pattern}
-        let gifIndex = Math.floor(Math.random() * numGifs);
+    let gifIndex = Math.floor(Math.random() * numGifs);
         console.log(gifIndex);
-        console.log(searchResult.data[0].url);
+        console.log(searchResult.data[gifIndex].images.original.url);
        
 
         //create new elements <div class ="col">
-        let $newCol = $("<div>", {class: "col-md-4"});
+    let $newCol = $("<div>", {class: "col-md-4 col-12 mb-3"});
                 ///cant figure out how to do source for image
-        let $newGif = $("<img>", {
-            src: searchResult.data[gifIndex].url,
-            class: "img-fluid",
+    let $newGif = $("<img>", {
+        src: searchResult.data[gifIndex].images.original.url,
+        class: "w-100"
         });
-        $newCol.append($newGif);
-        $gifBody.append($newCol);
-    
+    $newCol.append($newGif);
+    $gifBody.append($newCol);
+    console.log($newGif);
 }
 
 //{Part 3}Add a button next to the form which, when clicked, will remove all GIFs from the page.
 
-// $("#button-remove").on("click", function(){
-//     $gifBody.empty();
-// })
-// $(function(){
-//     $('#button-search').on('click', function(e){
-//         // e.preventDefault();
+$("#button-remove").on("click", function(){
+    $gifBody.empty();
+})
+$(function(){
+    $('#button-search').on('click', function(e){
+        // e.preventDefault();
         
-//         let $gifSearch = $('#gif-search').val();
-//         console.log($gifSearch);
-//     });
-// })
+        let $gifSearch = $('#gif-search').val();
+        console.log($gifSearch);
+    });
+})
 // console.log("Let's get this party started!");
 
 // async function gifSearch(search){
